@@ -69,6 +69,7 @@ while True:
          print (e)
     time.sleep(10)
 
+
 The code continuously fetches the temperature value using `analogRead` function.
 Since the sensor is connected to A0 pin of the Bolt, we will execute the analogRead() function on the pin A0.
 The response from the Bolt Cloud using the analogRead() function is in a JSON format, so we will need to load the JSON data sent by the cloud using Python's json library.
