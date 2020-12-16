@@ -42,34 +42,9 @@ Since we want to continuously monitor the temperature reading, we will enclose o
 An infinite loop is a special loop which executes its code continuously since its exit condition is never going to be valid.
 To exit the loop, we will need to forcibly exit the code by holding CTRL + C.
 
-while True:
-    try:
-        print ("Reading sensor value")
-        response = mybolt.analogRead('A0')
-        data = json.loads(response)
-        print("Sensor value is: " + str(data['value']))
-        sensor_value = int(data['value'])
-        if sensor_value > maximum_limit :
-           print(mybolt.digitalWrite('0','HIGH'))
-           t=sensor_value//10.24
-           print("Making request to Twilio to send an SMS")
-           response = sms.send_sms("Water is heating beyond maximum limit!Curent temperature:" +str(t))
-           print("Status of SMS at Twilio is: " + str(response.status))
-        elif sensor_value >= intermediate_limit :
-           t=sensor_value//10.24
-           print("Making request to Twilio to send a SMS")
-           response = sms.send_sms("Water is heated with a temperature of: " +str(t))
-           print("Response received from Twilio is: " + str(response))
-           print("Status of SMS at Twilio is :" + str(response.status))
-           print(mybolt.digitalWrite('0','LOW'))
-        if sensor_value< maximum_limit :
-           print(mybolt.digitalWrite('0','LOW')) #if the boiler is turned of after the buzzer was triggered then turn off the buzzer
-    except Exception as e:
-         print ("Error occured: Below are the details")
-         print (e)
-    time.sleep(10)
 
 
+In the rest of the program,
 The code continuously fetches the temperature value using `analogRead` function.
 Since the sensor is connected to A0 pin of the Bolt, we will execute the analogRead() function on the pin A0.
 The response from the Bolt Cloud using the analogRead() function is in a JSON format, so we will need to load the JSON data sent by the cloud using Python's json library.
